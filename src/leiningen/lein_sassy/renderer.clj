@@ -51,7 +51,7 @@
             inpath (.getPath file)
             insubpath (s/replace-first (.replaceAll inpath "\\\\" "/") (.replaceAll (:src options) "\\\\" "/") "")
             outsubpath (filename-to-css insubpath)
-            outpath (str (:dst options) outsubpath)
+            outpath (str (:dst options) (last (s/split outsubpath #"/")))
             rendered (render container runtime options (slurp file))]
         (print-message inpath " to " outpath)
         (if-not (.exists (io/file (.getParent (io/file outpath)))) (io/make-parents outpath))
